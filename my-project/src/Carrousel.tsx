@@ -59,6 +59,7 @@ const Carousel = ({slides}:CarouselProps) => {
                 size={40}
                 onClick={goToNext}
             />
+            {/* FIX SO INITALLY ALL LOAD WITH OPACITY 0 EXCEPT FIRST, THEN TRANSITIONS */}
             <div className="absolute inset-0">
                 {slides.map((slide, index) => (
                     <div
