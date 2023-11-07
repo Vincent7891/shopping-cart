@@ -40,7 +40,7 @@ export function ShoppingCartProvider({children}:ShoppingCartProviderProps){
     }
 
     const openCart = () => setIsOpen(true)
-    const closeCart = () =>setIsOpen(false)
+    const closeCart = () => setIsOpen(false)
 
     const increaseCartQuantity = (id:number) =>{
         setCartItems((currItems) =>{
@@ -58,21 +58,25 @@ export function ShoppingCartProvider({children}:ShoppingCartProviderProps){
         })
     }
 
-    const decreaseCartQuantity = (id:number) =>{
-        setCartItems(currItems =>{
-            if(currItems.find(item => item.id === id)?.quantity ===null){
-                return currItems.filter(item=>item.id !== id)
+    const decreaseCartQuantity = (id: number) => {
+        setCartItems(currItems => {
+            const item = currItems.find(item => item.id === id);
+            if (!item) return currItems; // If no item is found, return the current state
+    
+            if (item.quantity === 1) {
+                return currItems.filter(item => item.id !== id);
             } else {
-                return currItems.map(item =>{
-                    if (item.id === id){
-                        return {...item, quantity: item.quantity - 1}
-                    } else { 
-                        return item
+                return currItems.map(item => {
+                    if (item.id === id) {
+                        return { ...item, quantity: item.quantity - 1 };
+                    } else {
+                        return item;
                     }
-                })
+                });
             }
-        })
-    }
+        });
+    };
+    
 
     const removeFromCart = (id:number) => {
         setCartItems(currItems =>{

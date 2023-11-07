@@ -33,14 +33,31 @@ const ProductProvider = ({children}:ProductProviderProps) =>{
 
     const [products, setProducts] = useState<Product[]>([]);
 
-    useEffect(()=> {
+    // useEffect(()=> {
+    //     const fetchProducts = async () => {
+    //         const response = await fetch("https://fakestoreapi.com/products");
+    //         const data = await response.json()
+    //         setProducts(data)
+    //     };
+    //     fetchProducts()
+    // },[]);
+
+    useEffect(() => {
         const fetchProducts = async () => {
+          try {
             const response = await fetch("https://fakestoreapi.com/products");
-            const data = await response.json()
-            setProducts(data)
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setProducts(data);
+          } catch (error) {
+            console.error("Fetching products failed: ", error);
+          }
         };
-        fetchProducts()
-    },[]);
+        fetchProducts();
+      }, []);
+      
 
     return <ProductContext.Provider value = {{products}}>{children}</ProductContext.Provider>
 }

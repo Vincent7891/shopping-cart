@@ -1,7 +1,10 @@
+import { useSearchBar } from "./context/SearchBarContext"
 import { useShoppingCart } from "./context/ShoppingCartContext"
 
 export default function Header() {
-    const { openCart, cartQuantity } = useShoppingCart()
+    const {openCart, cartQuantity } = useShoppingCart()
+    const {openSearch} = useSearchBar()
+
     return (
       <div className="bg-amber-400">
           <div className="flex justify-between items-center p-6">
@@ -9,7 +12,7 @@ export default function Header() {
               <h1 className="font-extrabold italic">Visionary: Frame Your Outlook</h1>
               <div>
                   <ul className="flex gap-8">
-                      <li><img className="w-12 h-auto" src="src/assets/search.svg" alt="Search icon" /></li>
+                      <li><img onClick={openSearch} className="w-12 h-auto hover:cursor-pointer hover:scale-110" src="src/assets/search.svg" alt="Search icon" /></li>
                       <li className="relative">
                         <img onClick={openCart} className="w-12 h-auto hover:cursor-pointer hover:scale-110" src="src/assets/cart.svg" alt="Shopping cart icon" />
                         {cartQuantity > 0 && (
